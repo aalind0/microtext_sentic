@@ -27,9 +27,12 @@ for p in short_line.split('\n'):
     else:
         documents.append((p, "ovv"))
         words = word_tokenize(p)
+        file = open("testfile.txt", "w")
+            file.write("p")
+            file.close()
     i+=1
 
-print(documents)
+#print(documents)
 #save_documents = open("documents.pickle", "wb")
 #pickle.dump(documents, save_documents)
 #save_documents.close()
