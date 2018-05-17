@@ -27,9 +27,12 @@ for p in short_line.split('\n'):
     else:
         documents.append((p, "ovv"))
         words = word_tokenize(p)
-        file = open("testfile.txt", "w")
-            file.write("p")
-            file.close()
+        with open("ovv.txt", "w") as f1:
+            for p in open("nus_sms-data.txt"):
+                if i%2 == 0:
+                    f = open("ovv.txt", "w")
+                    f.write(p)
+
     i+=1
 
 #print(documents)
