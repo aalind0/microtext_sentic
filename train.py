@@ -5,6 +5,8 @@ from nltk.tokenize import word_tokenize
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.svm import SVC, LinearSVC, NuSVC
+from nltk.classify import ClassifierI
+from statistics import mode
 
 import sklearn_crfsuite
 from sklearn_crfsuite import scorers
@@ -13,7 +15,26 @@ from sklearn_crfsuite import metrics
 import pickle
 import numpy as np
 
+class VoteClassifier(ClassifierI):
+    def __init__(self, *classifiers):
+        self._classifiers = classifiers
 
+    def classify(self, features):
+        votes = []
+        for c in self._classifiers:
+            v = c.classify(features)
+            votes.append(v)
+        return mode(votes)
+
+    def confidence(self, features):
+        votes = []
+        for c in self._classifiers:
+            v = c.classify(features)
+            votes.append(v)
+
+        choice_votes = votes.count(mode(votes))
+        conf = choice_votes / len(votes)
+        return conf
 
 iv = open("iv.txt","r").read()
 ovv = open("ovv.txt","r").read()
