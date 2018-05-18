@@ -92,8 +92,8 @@ random.shuffle(featuresets)
 print(len(featuresets))
 
 
-testing_set = featuresets[2000:]
-training_set = featuresets[:2000]
+testing_set = featuresets[3800:]
+training_set = featuresets[:3800]
 
 
 save_features = open("featuresets.pickle","wb")
