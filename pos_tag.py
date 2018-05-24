@@ -1,11 +1,10 @@
-import nltk
+import nltk,re
 import json
 from nltk.tokenize import word_tokenize
 
-iv = open("iv.txt","r").read()
-ovv = open("ovv.txt","r").read()
+iv = open("another_iv.txt","r").read()
+ovv = open("another_ovv.txt","r").read()
 
-file2 = open("pos_iv.txt", "w")
 
 all_words = []
 documents = []
@@ -14,16 +13,21 @@ allowed_word_types = ["J","R","V"]
 
 
 for p in iv.split('\n'):
-    words = word_tokenize(p)
+    twitter_username_re = re.sub(r'@([A-Za-z0-9_]+)',"", p)
+    twitter_username_re = re.sub(r'http\S+', '', twitter_username_re)
+    words = word_tokenize(twitter_username_re)
     pos = nltk.pos_tag(words)
+    print(pos)
 
 
 
 for p in ovv.split('\n'):
-    documents.append( (p, "ovv") )
-    words = word_tokenize(p)
+    twitter_username_re = re.sub(r'@([A-Za-z0-9_]+)',"", p)
+    twitter_username_re = re.sub(r'http\S+', '', twitter_username_re)
+    words = word_tokenize(twitter_username_re)
     pos = nltk.pos_tag(words)
     print(pos)
+
 
 
 
