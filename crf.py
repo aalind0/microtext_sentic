@@ -17,7 +17,9 @@ training_y = ['match',
               'match',
               'match',
               'non-match',
-              'non-match']
+              'non-match',
+              'bahut motu']
+
 
 # Extract features
 feature_extractor = StringPairFeatureExtractor(match=True, numeric=True)
