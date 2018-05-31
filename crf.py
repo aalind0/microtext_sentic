@@ -17,18 +17,19 @@ training_y = ['match',
               'match',
               'match',
               'non-match',
-              'non-match',
-              'bahut motu']
+              'non-match']
 
 
-# Extract features
+# # Extract features
 feature_extractor = StringPairFeatureExtractor(match=True, numeric=True)
 training_X_extracted = feature_extractor.fit_transform(training_X)
-
-# Train model
-model = Hacrf(l2_regularization=1.0)
-model.fit(training_X_extracted, training_y)
-
-# Evaluate
-from sklearn.metrics import confusion_matrix
-predictions = model.predict(training_X_extracted)
+#
+# # Train model
+# model = Hacrf(l2_regularization=1.0)
+# model.fit(training_X_extracted, training_y)
+#
+# # Evaluate
+# from sklearn.metrics import confusion_matrix
+# predictions = model.predict(training_X_extracted)
+#
+# print(confusion_matrix(training_y, predictions))

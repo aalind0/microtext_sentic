@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tell My Concept</title>
+    <link href="SentimentAnalysis_Assets/style.css" rel="stylesheet" type="text/css"
+        media="screen" />
+    <script src="SentimentAnalysis_Assets/js/js.js" language="javascript" type="text/javascript"
+        charset="UTF-8"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <!--<script type="text/javascript">
+        $(function () {
+
+            var randmNo = Math.floor((Math.random() * 6) + 1);
+
+            $("body").addClass("bckgrnd-" + randmNo);
+        });
+
+    </script>-->
+</head>
+<body style="background-color: #FFFFFF;">
+    <div class="container">
+        <header style="display:none;">
+				<h1>Tell me your thoughts.. <span>I will tell your Concept</span></h1>
+
+		</header>
+        <div id="searchbox" action="">
+        <input class="input" id="input" type="text" placeholder="Type here..." onkeyup="enable_disable ();">
+        <input id="submit" type="submit" value="Get concepts" onclick="go (10)">
+
+		<!-- <button id="submit" onclick="go (1)" disabled="">Tell me!!</button>-->
+        </div>
+        <div id="result">
+<!--            <span>this is Positive Sentiment</span> <span>
+                <img alt="" src="SentimentAnalysis_Assets/images/progress.gif" />
+            </span>-->
+        </div>
+        <div class="footer" style="display:none;">
+            <ul id="cbp-tm-menu" class="cbp-tm-menu">
+
+<span>
+<input type="submit" style="border-radius: 50px 3px 3px 50px; height: 18px; vertical-align: middle; opacity: 0.2;margin-top: 7px;" id="submit" value="Compile" onclick="go (1)">
+</span>
+<span>
+<input type="submit" style="height: 18px; opacity: 0.2; margin-top: 7px;" id="submit" value="Debug" onclick="go (2)">
+</span>
+
+                <li><a href="#">How it works</a> </li>
+                <li><a href="#">Developers</a>
+                    <ul class="cbp-tm-submenu">
+                        <li><a href="http://www.soujanyaporia.in/" class="cbp-tm-icon-archive" target="_blank">
+                            Soujanya Poria</a></li>
+                        <li><a href="http://sg.linkedin.com/in/beraanirban" class="cbp-tm-icon-cog" target="_blank">
+                            Anirban Bera</a></li>
+						<li><a href="http://gelbukh.com/" class="cbp-tm-icon-archive" target="_blank">Dr. Alexander
+                            Gelbukh</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Acknowledgement</a>
+                    <ul class="cbp-tm-submenu">
+
+						<li><a href="http://www.cs.stir.ac.uk/~ahu/" class="cbp-tm-icon-link" target="_blank">
+                            Dr. Amir Hussain</a></li>
+                        <li><a href="http://newtonhoward.com/" class="cbp-tm-icon-cog" target="_blank">Dr. Newton
+                            Howard</a></li>
+                        <li><a href="http://sentic.net/erikcambria/" class="cbp-tm-icon-users" target="_blank">
+                            Dr. Erik Cambria</a></li>
+						<li><a href="http://www.sivajibandyopadhyay.com/" class="cbp-tm-icon-archive" target="_blank">Dr. Sivaji Bandyopadhyay</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="SentimentAnalysis_Assets/js/modernizr.js"></script>
+    <script type="text/javascript" src="SentimentAnalysis_Assets/js/cbpTooltipMenu.js"></script>
+    <script type="text/javascript">
+        var menu = new cbpTooltipMenu(document.getElementById('cbp-tm-menu'));
+    </script>
+</body>
+</html>
