@@ -1,11 +1,3 @@
-import itertools
-import numpy as np
-import matplotlib.pyplot as plt
-
-from sklearn import svm, datasets
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
-
 import nltk
 import random
 from nltk.classify.scikitlearn import SklearnClassifier
@@ -16,28 +8,11 @@ from sklearn.svm import SVC, LinearSVC, NuSVC
 from nltk.classify import ClassifierI
 from statistics import mode
 
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn import cross_validation
+
 import pickle
-
-class VoteClassifier(ClassifierI):
-    def __init__(self, *classifiers):
-        self._classifiers = classifiers
-
-    def classify(self, features):
-        votes = []
-        for c in self._classifiers:
-            v = c.classify(features)
-            votes.append(v)
-        return mode(votes)
-
-    def confidence(self, features):
-        votes = []
-        for c in self._classifiers:
-            v = c.classify(features)
-            votes.append(v)
-
-        choice_votes = votes.count(mode(votes))
-        conf = choice_votes / len(votes)
-        return conf
+import numpy as np
 
 iv = open("iv.txt","r").read()
 ovv = open("ovv.txt","r").read()
@@ -46,14 +21,6 @@ all_words = []
 documents = []
 
 allowed_word_types = ["J","R","V"]
-
-X = iv[:132001]
-Y = ovv[:132001]
-
-X_train, X_test, y_train, y_test = train_test_split(X, Y, random_state=0)
-
-classifier = svm.SVC(kernel='linear', C=0.01)
-y_pred = classifier.fit(X_train, y_train).predict(X_test)
 
 
 for p in iv.split('\n'):
@@ -106,59 +73,20 @@ print(len(featuresets))
 testing_set = featuresets[3800:]
 training_set = featuresets[:3800]
 
+cv = cross_validation.KFold(len(training_set), n_folds=10, shuffle=True, random_state=None)
 
-# save_features = open("featuresets.pickle","wb")
-# pickle.dump(featuresets, save_features)
-# save_features.close()
-#
-# NuSVC_classifier = SklearnClassifier(NuSVC())
-# NuSVC_classifier.train(training_set)
-# print("NuSVC_classifier accuracy percent:", (nltk.classify.accuracy(NuSVC_classifier, testing_set))*100)
-#
-# #Sample training using SVC
-# LinearSVC_classifier = SklearnClassifier(LinearSVC())
-# LinearSVC_classifier.train(training_set)
-# print("LinearSVC_classifier accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
-#
-# save_classifier = open("LinearSVC_classifier5k.pickle","wb")
-# pickle.dump(LinearSVC_classifier, save_classifier)
-# save_classifier.close()
-#
-# classifier = nltk.NaiveBayesClassifier.train(training_set)
-# print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
-#
-# save_classifier = open("originalnaivebayes5k.pickle","wb")
-# pickle.dump(classifier, save_classifier)
-# save_classifier.close()
-#
-# MNB_classifier = SklearnClassifier(MultinomialNB())
-# MNB_classifier.train(training_set)/home/c2/.local/lib/python3.6/site-packages/sklearn/utils/validation.py", line 573, in check_X_y
-# print("MNB_classifier accuracy percent:", (nltk.classify.accuracy(MNB_classifier, testing_set))*100)
-#
-# save_classifier = open("MNB_classifier5k.pickle","wb")
-# pickle.dump(MNB_classifier, save_classifier)
-# save_classifier.close()
-#
-# BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
-# BernoulliNB_classifier.train(training_set)
-# print("BernoulliNB_classifier accuracy percent:", (nltk.classify.accuracy(BernoulliNB_classifier, testing_set))*100)
-#
-# save_classifier = open("BernoulliNB_classifier5k.pickle","wb")
-# pickle.dump(BernoulliNB_classifier, save_classifier)
-# save_classifier.close()
-#
-# LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
-# LogisticRegression_classifier.train(training_set)
-# print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
-#
-# save_classifier = open("LogisticRegression_classifier5k.pickle","wb")
-# pickle.dump(LogisticRegression_classifier, save_classifier)
-# save_classifier.close()
-#
-# SGDC_classifier = SklearnClassifier(SGDClassifier())
-# SGDC_classifier.train(training_set)
-# print("SGDClassifier accuracy percent:",nltk.classify.accuracy(SGDC_classifier, testing_set)*100)
-#
-# save_classifier = open("SGDC_classifier5k.pickle","wb")
-# pickle.dump(SGDC_classifier, save_classifier)
-# save_classifier.close()
+
+# for traincv, testcv in cv:
+#     SGDC_classifier = SklearnClassifier(SGDClassifier())
+#     clf = SGDC_classifier
+#     SGDC_classifier.train(training_set[traincv[0]:traincv[len(traincv)-1]])
+#     print('accuracy:', nltk.classify.util.accuracy(SGDC_classifier, training_set[testcv[0]:testcv[len(testcv)-1]]))
+
+from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import confusion_matrix
+for traincv, testcv in cv:
+    SGDC_classifier = SklearnClassifier(SGDClassifier())
+    clf = SGDC_classifier
+    y_pred = cross_val_predict(SGDC_classifier, training_set[testcv[0]:testcv[len(testcv)-1]])
+    y = traincv
+    conf_mat = confusion_matrix(y,y_pred)
