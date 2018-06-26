@@ -79,3 +79,9 @@ cv = cross_validation.KFold(len(training_set), n_folds=10, shuffle=True, random_
 for traincv, testcv in cv:
     classifier = nltk.NaiveBayesClassifier.train(training_set[traincv[0]:traincv[len(traincv)-1]])
     print('accuracy:', nltk.classify.util.accuracy(classifier, training_set[testcv[0]:testcv[len(testcv)-1]]))
+
+
+# for traincv, testcv in cv:
+#     LinearSVC_classifier = SklearnClassifier(LinearSVC())
+#     LinearSVC_classifier.train(training_set[traincv[0]:traincv[len(traincv)-1]])
+#     print('accuracy:', nltk.classify.util.accuracy(LinearSVC_classifier, training_set[testcv[0]:testcv[len(testcv)-1]]))
