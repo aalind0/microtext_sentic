@@ -86,7 +86,17 @@ crf = sklearn_crfsuite.CRF(
     max_iterations=100,
     all_possible_transitions=True
 )
-crf.fit(training_set, testing_set)
+
+for i in range(0, 100):
+    crf.fit(training_set[i], testing_set[i])
+
+for j in range(0, 100):
+    y_pred = crf.predict(testing_set[j])
+    metrics.flat_f1_score(training_set, y_pred, average='weighted')
+
+# y_pred = crf.predict(testing_set[i])
+# metrics.flat_f1_score(training_set, y_pred,
+#                       average='weighted')
 
 
 # NuSVC_classifier = SklearnClassifier(NuSVC())
